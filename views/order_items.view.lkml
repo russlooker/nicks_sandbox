@@ -40,8 +40,19 @@ view: order_items {
     sql: ${TABLE}.sale_price ;;
   }
 
+  dimension: profit {
+    type: number
+    sql:  ${sale_price} - ${inventory_items.cost} ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, inventory_items.id, orders.id]
+  }
+
+
+  measure: average_sale_price {
+    type: average
+    sql: ${TABLE}.sale_price ;;
   }
 }

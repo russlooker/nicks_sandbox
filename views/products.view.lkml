@@ -39,9 +39,19 @@ view: products {
     sql: ${TABLE}.retail_price ;;
   }
 
+  dimension: profit {
+    type:  number
+    sql: ${TABLE}.retail_price - ${inventory_items.cost} ;;
+  }
+
   dimension: sku {
     type: string
     sql: ${TABLE}.sku ;;
+  }
+
+  measure: total_profit {
+    type: sum
+    sql: ${profit} ;;
   }
 
   measure: count {

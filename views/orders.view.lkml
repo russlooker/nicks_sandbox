@@ -39,6 +39,31 @@ view: orders {
     sql: ${TABLE}.user_id ;;
   }
 
+  dimension: order_count_buckets {
+    type: tier
+    tiers: [1,2,3,6,10]
+    style: integer
+    sql: ${customer_order_facts.order_count};;
+    allow_fill:  no
+  }
+
+  dimension: order_amount_buckets {
+    type: tier
+    tiers: [5, 20, 50, 100, 500, 1000]
+    style: classic
+    sql:  ${user_id} ;;
+  }
+
+  measure: total_profit {
+    type: sum
+    sql:  ${order_items.profit} ;;
+  }
+
+  measure: order_amount {
+    type:  sum
+    sql: ${order_items.sale_price} ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, users.last_name, users.id, users.first_name, order_items.count]
